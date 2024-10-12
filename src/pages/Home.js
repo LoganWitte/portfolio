@@ -1,104 +1,103 @@
-import React, { useState } from 'react';
+import { useState, useEffect, useRef } from "react";
 import '../index.css';
 
 const Home = () => {
+    
+    const [isSelected, setIsSelected] = useState("about");
+    const observer = useRef();
 
-  const [isMobileMenuOpen, setMobileMenuOpen] = useState(true);
+    //Sets isSelected as the user scrolls
+    useEffect(() => {
+        const sections = ['about', 'experience', 'projects'];
+        function callback(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    setIsSelected(entry.target.id);
+                    return;
+                }
+            });
+        };
 
-  // Toggle mobile menu
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!isMobileMenuOpen);
-  };
+        observer.current = new IntersectionObserver(callback, {
+            threshold: 0.8 // Adjust this value based on how much you need in view to count as visible
+        });
 
-  return(
-    <div className="w-screen h-screen flex flex-col">
-      <div className="flex justify-between items-center justify-center text-center bg-gray-800 p-2">
-        <a href="/" className="text-white text-2xl font-semibold">
-          Logan Witte
-        </a>
-        {isMobileMenuOpen ?
-          <button className="lg:hidden text-white text-2xl border rounded p-0.25 w-8" onClick={toggleMobileMenu}>
-              ☰
-          </button>
-          :
-          <div>
-            <button className="lg:hidden text-white text-2xl border rounded p-0.25 w-8 bg-slate-600" onClick={toggleMobileMenu}>
-                ✖
-            </button>
-            <div className="lg:hidden absolute right-0 mt-2 w-28 bg-white bg-opacity-50 rounded-bl-lg border-l border-b border-black">
-              <a href="#about" className="block px-0 py-1 hover:bg-slate-400">
-                About
-              </a>
-              <div className="border-t border-black" />
-              <a href="#skills" className="block px-0 py-1 hover:bg-slate-400">
-                Skills
-              </a>
-              <div className="border-t border-black" />
-              <a href="#projects" className="block px-0 py-1 hover:bg-slate-400">
-                Projects
-              </a>
-              <div className="border-t border-black" />
-              <a href="#experience" className="block px-0 py-1 hover:bg-slate-400">
-                Experience
-              </a>
-              <div className="border-t border-black" />
-              <a href="#contact" className="block px-0 py-1 hover:bg-slate-400">
-                Contact
-              </a>
-              <div className="border-t border-black" />
-              <a href="/" className="block px-0 py-1 hover:bg-slate-400">
-                Resume
-              </a>
+        sections.forEach(section => {
+            const element = document.getElementById(section);
+            if (element) {
+                observer.current.observe(element);
+            }
+        });
+
+        return () => {
+            if (observer.current) {
+                sections.forEach(section => {
+                    const element = document.getElementById(section);
+                    if (element) {
+                        observer.current.unobserve(element);
+                    }
+                });
+            }
+        };
+    }, []);
+
+    return (
+        <div className="bg-slate-900 w-screen h-screen overflow-y-auto text-slate-200
+                        lg:flex lg:flex-row lg:justify-center"
+                        >
+            <div id="top"></div>
+            <div className="flex flex-col px-12 mt-12 mb-24
+                            lg:max-w-sm lg:flex lg:justify-between lg:flex-1 lg:py-16 lg:my-0 lg:h-fit lg:min-h-full lg:sticky lg:top-0">
+                <div className="">
+                    <a href="/#top" className="font-bold text-4xl hover:cursor-pointer">Logan Witte</a>
+                    <div className="font-semibold text-lg py-4 max-w-xs">Computer Science Student @ University of Central Florida</div>
+                    <div className="opacity-65 max-w-xs">I create precise, interesting, and accessible digital experiences.</div>
+                    <div className="hidden lg:block pt-8 flex flex-col">
+                        <a href="/#about" className={`${isSelected === "about" ? "font-bold opacity-100 " : "opacity-50 "}text-sm flex flex-row pb-3 hover:underline`}>
+                            <div className={`h-0 border border-white relative top-3 mr-3
+                                            ${isSelected === "about" ? "transition-all duration-300 transform w-12" : "transition-all duration-300 transform w-6"}
+                                            `} />
+                            ABOUT
+                        </a>
+                        <a href="/#experience" className={`${isSelected === "experience" ? "font-bold opacity-100 " : "opacity-50 "}text-sm flex flex-row pb-3 hover:underline`}>
+                            <div className={`h-0 border border-white relative top-3 mr-3
+                                            ${isSelected === "experience" ? "transition-all duration-300 transform w-12" : "transition-all duration-300 transform w-6"}
+                                            `} />
+                            EXPERIENCE
+                        </a>
+                        <a href="/#projects" className={`${isSelected === "projects" ? "font-bold opacity-100 " : "opacity-50 "}text-sm flex flex-row pb-3 hover:underline`}>
+                            <div className={`h-0 border border-white relative top-3 mr-3
+                                            ${isSelected === "projects" ? "transition-all duration-300 transform w-12" : "transition-all duration-300 transform w-6"}
+                                            `} />
+                            PROJECTS
+                        </a>
+                    </div>
+                </div>
+                
+                <div className="text-2xl mt-4">
+                    <div className="flex flex-row">
+                        <a href="https://github.com/LoganWitte" target="_blank" rel="noreferrer"><i className="fa-brands fa-github p-1 pr-4 opacity-50 hover:opacity-100" /></a>
+                        <a href="https://www.linkedin.com/in/logan-witte-696637308/" target="_blank" rel="noreferrer"><i className="fa-brands fa-linkedin p-1 pr-4 opacity-50 hover:opacity-100" /></a>
+                        <a href="/resume.pdf" target="_blank" rel="noreferrer" className=" opacity-50 hover:opacity-100">
+                            <div className="flex">
+                                <i className="fa-solid fa-file-pdf p-1" />
+                                <div className="text-base p-1 lg:pl-0">Resume</div> 
+                            </div>
+                        </a>
+                    </div>
+                </div>
             </div>
-          </div>
-          
-        }
-        <div className="hidden lg:flex space-x-2">
-          <a href="#about" className="text-white font-semibold py-1 my-1 px-4 rounded hover:bg-slate-600 hover:underline transition duration-200">
-            About
-          </a>
-          <a href="#skills" className="text-white font-semibold py-1 my-1 px-4 rounded hover:bg-slate-600 hover:underline transition duration-200">
-            Skills
-          </a>
-          <a href="#projects" className="text-white font-semibold py-1 my-1 px-4 rounded hover:bg-slate-600 hover:underline transition duration-200">
-            Projects
-          </a>
-          <a href="#experience" className="text-white font-semibold py-1 my-1 px-4 rounded hover:bg-slate-600 hover:underline transition duration-200">
-            Experience
-          </a>
-          <a href="#contact" className="text-white font-semibold py-1 my-1 px-4 rounded hover:bg-slate-600 hover:underline transition duration-200">
-            Contact
-          </a>
-          <a href="/" className="text-white font-semibold py-1 my-1 px-4 rounded hover:bg-slate-600 hover:underline transition duration-200">
-            Resume
-          </a>
+            
+            <div className="flex flex-row
+                            lg:min-w-2xl lg:max-w-4xl lg:flex-1 lg:h-fit lg:pt-16">
+                <div className="px-12 w-full">
+                    <div id="about" style={{height: "35em"}}>ABOUT</div>
+                    <div id="experience" style={{height: "35em"}}>EXPERIENCE</div>
+                    <div id="projects" style={{height: "35em"}}>PROJECTS</div>
+                </div>
+            </div>
         </div>
-      </div>
-      <div className="flex flex-1 flex-col items-center text-center bg-gray-100 overflow-y-auto">
-        <div id="home"></div>
-        <div className="w-full bg-blue-100" id="about">
-          About
-          <div style={{height: "100vh"}} />
-        </div>
-        <div className="w-full bg-blue-100" id="skills">
-          Skills
-          <div style={{height: "100vh"}} />
-        </div>
-        <div className="w-full bg-blue-100" id="projects">
-          Projects
-          <div style={{height: "100vh"}} />
-        </div>
-        <div className="w-full bg-blue-100" id="experience">
-          Experience
-          <div style={{height: "100vh"}} />
-        </div>
-        <div className="w-full bg-blue-100" id="contact">
-          Contact
-          <div style={{height: "100vh"}} />
-        </div>
-      </div>
-    </div>
-  )
-}
+    );
+};
 
 export default Home;
