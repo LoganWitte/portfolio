@@ -51,7 +51,7 @@ const Home = () => {
                 <div className="">
                     <a href="/#top" className="font-bold text-4xl hover:cursor-pointer">Logan Witte</a>
                     <div className="font-semibold text-lg py-4 max-w-xs">Computer Science Student @ University of Central Florida</div>
-                    <div className="opacity-65 max-w-xs">I create precise, interesting, and accessible digital experiences.</div>
+                    <div className="opacity-65 max-w-xs">I create responsive, appealing, and accessible websites and software</div>
                     <div className="hidden lg:block pt-8 flex flex-col">
                         <a href="/#about" className={`${isSelected === "about" ? "font-bold opacity-100 " : "opacity-50 "}text-sm flex flex-row pb-3 hover:underline`}>
                             <div className={`h-0 border border-white relative top-3 mr-3
@@ -91,9 +91,16 @@ const Home = () => {
             <div className="flex flex-row
                             lg:min-w-2xl lg:max-w-4xl lg:flex-1 lg:h-fit lg:pt-16">
                 <div className="px-12 w-full">
-                    <div id="about" style={{height: "35em"}}>ABOUT</div>
-                    <div id="experience" style={{height: "35em"}}>EXPERIENCE</div>
-                    <div id="projects" style={{height: "35em"}}>PROJECTS</div>
+                    <div id="about" style={{height: "35em"}}>
+                        ABOUT SECTION <br />
+                        <div className="text-red-500">
+                            Note: this website is unfinished as of now <br />
+                            <div className="hidden lg:block">Please reference resume (located bottom left)</div>
+                            <div className="block lg:hidden">Please reference resume (located above)</div>                    
+                        </div>                  
+                    </div>
+                    <div id="experience" style={{height: "35em"}}>EXPERIENCE SECTION</div>
+                    <div id="projects" style={{height: "35em"}}>PROJECTS SECTION</div>
                 </div>
             </div>
         </div>
