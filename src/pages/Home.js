@@ -53,20 +53,20 @@ const Home = () => {
                     <div className="font-semibold text-lg py-4 max-w-xs">Computer Science Student @ University of Central Florida</div>
                     <div className="opacity-65 max-w-xs">I create responsive, appealing, and accessible websites and software</div>
                     <div className="hidden lg:block pt-8 flex flex-col">
-                        <a href="/#about" className={`${isSelected === "about" ? "font-bold opacity-100 " : "opacity-50 "}text-sm flex flex-row pb-3 hover:underline`}>
-                            <div className={`h-0 border border-white relative top-3 mr-3
+                        <a href="/#about" className={`${isSelected === "about" ? "font-bold opacity-100 " : "opacity-50 "} text-sm flex flex-row mb-3 hover:underline`}>
+                            <div className={`h-0 border border-white mr-3 mt-2
                                             ${isSelected === "about" ? "transition-all duration-300 transform w-12" : "transition-all duration-300 transform w-6"}
                                             `} />
                             ABOUT
                         </a>
-                        <a href="/#experience" className={`${isSelected === "experience" ? "font-bold opacity-100 " : "opacity-50 "}text-sm flex flex-row pb-3 hover:underline`}>
-                            <div className={`h-0 border border-white relative top-3 mr-3
+                        <a href="/#experience" className={`${isSelected === "experience" ? "font-bold opacity-100 " : "opacity-50 "} text-sm flex flex-row mb-3 hover:underline`}>
+                            <div className={`h-0 border border-white mr-3 mt-2
                                             ${isSelected === "experience" ? "transition-all duration-300 transform w-12" : "transition-all duration-300 transform w-6"}
                                             `} />
                             EXPERIENCE
                         </a>
-                        <a href="/#projects" className={`${isSelected === "projects" ? "font-bold opacity-100 " : "opacity-50 "}text-sm flex flex-row pb-3 hover:underline`}>
-                            <div className={`h-0 border border-white relative top-3 mr-3
+                        <a href="/#projects" className={`${isSelected === "projects" ? "font-bold opacity-100 " : "opacity-50 "} text-sm flex flex-row mb-3 hover:underline`}>
+                            <div className={`h-0 border border-white mr-3 mt-2
                                             ${isSelected === "projects" ? "transition-all duration-300 transform w-12" : "transition-all duration-300 transform w-6"}
                                             `} />
                             PROJECTS
