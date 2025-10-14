@@ -1,106 +1,102 @@
-import { useState, useEffect, useRef } from "react";
-import '../index.css';
 
+import { useState, useEffect, useRef } from "react";
+
+// Sidebar navigation component
+function Sidebar({ isSelected }) {
+    return (
+        <div className="flex flex-col px-12 mt-12 mb-24 lg:max-w-sm lg:flex lg:justify-between lg:flex-1 lg:py-16 lg:my-0 lg:h-fit lg:min-h-full lg:sticky lg:top-0">
+            <div>
+                <a href="/#top" className="text-4xl font-bold hover:cursor-pointer">Logan Witte</a>
+                <div className="max-w-xs py-4 text-lg font-semibold">Computer Science Student @ University of Central Florida</div>
+                <div className="max-w-xs opacity-65">I create responsive, appealing, and accessible websites and software</div>
+                <div className="flex flex-col pt-8 lg:block">
+                    {['about', 'experience', 'projects'].map(section => (
+                        <a
+                            key={section}
+                            href={`/#${section}`}
+                            className={`${isSelected === section ? "font-bold opacity-100" : "opacity-50"} text-sm flex flex-row mb-3 hover:underline`}
+                        >
+                            <div
+                                className={`h-0 border border-white mr-3 mt-2 ${isSelected === section ? "transition-all duration-300 transform w-12" : "transition-all duration-300 transform w-6"}`}
+                            />
+                            {section.toUpperCase()}
+                        </a>
+                    ))}
+                </div>
+            </div>
+            <SocialLinks />
+        </div>
+    );
+}
+
+// Social links component
+function SocialLinks() {
+    return (
+        <div className="mt-4 text-2xl">
+            <div className="flex flex-row">
+                <a href="https://github.com/LoganWitte" target="_blank" rel="noreferrer">
+                    <i className="p-1 pr-4 opacity-50 fa-brands fa-github hover:opacity-100" />
+                </a>
+                <a href="https://www.linkedin.com/in/logan-witte-696637308/" target="_blank" rel="noreferrer">
+                    <i className="p-1 pr-4 opacity-50 fa-brands fa-linkedin hover:opacity-100" />
+                </a>
+                <a href="/resume.pdf" target="_blank" rel="noreferrer" className="opacity-50 hover:opacity-100">
+                    <div className="flex">
+                        <i className="p-1 fa-solid fa-file-pdf" />
+                        <div className="p-1 text-base lg:pl-0">Resume</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    );
+}
+
+// Main Home component
 const Home = () => {
-    
     const [isSelected, setIsSelected] = useState("about");
     const observer = useRef();
 
-    //Sets isSelected as the user scrolls
+    // Sets isSelected as the user scrolls
     useEffect(() => {
-        const sections = ['about', 'experience', 'projects'];
+        const sections = ["about", "experience", "projects"];
         function callback(entries) {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     setIsSelected(entry.target.id);
-                    return;
                 }
             });
-        };
-
-        observer.current = new IntersectionObserver(callback, {
-            threshold: 0.8 // Adjust this value based on how much you need in view to count as visible
-        });
-
+        }
+        observer.current = new IntersectionObserver(callback, { threshold: 0.8 });
         sections.forEach(section => {
             const element = document.getElementById(section);
-            if (element) {
-                observer.current.observe(element);
-            }
+            if (element) observer.current.observe(element);
         });
-
         return () => {
             if (observer.current) {
                 sections.forEach(section => {
                     const element = document.getElementById(section);
-                    if (element) {
-                        observer.current.unobserve(element);
-                    }
+                    if (element) observer.current.unobserve(element);
                 });
             }
         };
     }, []);
 
     return (
-        <div className="bg-slate-900 w-screen h-screen overflow-y-auto text-slate-200
-                        lg:flex lg:flex-row lg:justify-center"
-                        >
+        <div className="w-screen h-screen overflow-y-auto bg-slate-900 text-slate-200 lg:flex lg:flex-row lg:justify-center">
             <div id="top"></div>
-            <div className="flex flex-col px-12 mt-12 mb-24
-                            lg:max-w-sm lg:flex lg:justify-between lg:flex-1 lg:py-16 lg:my-0 lg:h-fit lg:min-h-full lg:sticky lg:top-0">
-                <div className="">
-                    <a href="/#top" className="font-bold text-4xl hover:cursor-pointer">Logan Witte</a>
-                    <div className="font-semibold text-lg py-4 max-w-xs">Computer Science Student @ University of Central Florida</div>
-                    <div className="opacity-65 max-w-xs">I create responsive, appealing, and accessible websites and software</div>
-                    <div className="hidden lg:block pt-8 flex flex-col">
-                        <a href="/#about" className={`${isSelected === "about" ? "font-bold opacity-100 " : "opacity-50 "} text-sm flex flex-row mb-3 hover:underline`}>
-                            <div className={`h-0 border border-white mr-3 mt-2
-                                            ${isSelected === "about" ? "transition-all duration-300 transform w-12" : "transition-all duration-300 transform w-6"}
-                                            `} />
-                            ABOUT
-                        </a>
-                        <a href="/#experience" className={`${isSelected === "experience" ? "font-bold opacity-100 " : "opacity-50 "} text-sm flex flex-row mb-3 hover:underline`}>
-                            <div className={`h-0 border border-white mr-3 mt-2
-                                            ${isSelected === "experience" ? "transition-all duration-300 transform w-12" : "transition-all duration-300 transform w-6"}
-                                            `} />
-                            EXPERIENCE
-                        </a>
-                        <a href="/#projects" className={`${isSelected === "projects" ? "font-bold opacity-100 " : "opacity-50 "} text-sm flex flex-row mb-3 hover:underline`}>
-                            <div className={`h-0 border border-white mr-3 mt-2
-                                            ${isSelected === "projects" ? "transition-all duration-300 transform w-12" : "transition-all duration-300 transform w-6"}
-                                            `} />
-                            PROJECTS
-                        </a>
-                    </div>
-                </div>
-                
-                <div className="text-2xl mt-4">
-                    <div className="flex flex-row">
-                        <a href="https://github.com/LoganWitte" target="_blank" rel="noreferrer"><i className="fa-brands fa-github p-1 pr-4 opacity-50 hover:opacity-100" /></a>
-                        <a href="https://www.linkedin.com/in/logan-witte-696637308/" target="_blank" rel="noreferrer"><i className="fa-brands fa-linkedin p-1 pr-4 opacity-50 hover:opacity-100" /></a>
-                        <a href="/resume.pdf" target="_blank" rel="noreferrer" className=" opacity-50 hover:opacity-100">
-                            <div className="flex">
-                                <i className="fa-solid fa-file-pdf p-1" />
-                                <div className="text-base p-1 lg:pl-0">Resume</div> 
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            
-            <div className="flex flex-row
-                            lg:min-w-2xl lg:max-w-4xl lg:flex-1 lg:h-fit lg:pt-16">
-                <div className="px-12 w-full">
-                    <div id="about" style={{height: "35em"}}>
+            <Sidebar isSelected={isSelected} />
+            <div className="flex flex-row lg:min-w-2xl lg:max-w-4xl lg:flex-1 lg:h-fit lg:pt-16">
+                <div className="w-full px-12">
+                    <div id="about" style={{ height: "35em" }}>
                         ABOUT SECTION <br />
                         <div className="text-red-500">
                             Note: this website is unfinished as of now <br />
                             <div className="hidden lg:block">Please reference resume (located bottom left)</div>
-                            <div className="block lg:hidden">Please reference resume (located above)</div>                    
-                        </div>                  
+                            <div className="block lg:hidden">Please reference resume (located above)</div>
+                        </div>
                     </div>
-                    <div id="experience" style={{height: "35em"}}>EXPERIENCE SECTION</div>
-                    <div id="projects" style={{height: "35em"}}>PROJECTS SECTION</div>
+                    <div id="experience" style={{ height: "35em" }}>EXPERIENCE SECTION</div>
+                    <div id="projects" style={{ height: "35em" }}>PROJECTS SECTION</div>
                 </div>
             </div>
         </div>
