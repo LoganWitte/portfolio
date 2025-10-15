@@ -1,106 +1,88 @@
-
 import { useState, useEffect, useRef } from "react";
+import { Sidebar } from "../modules/Sidebar";
 
-// Sidebar navigation component
-function Sidebar({ isSelected }) {
-    return (
-        <div className="flex flex-col px-12 mt-12 mb-24 lg:max-w-sm lg:flex lg:justify-between lg:flex-1 lg:py-16 lg:my-0 lg:h-fit lg:min-h-full lg:sticky lg:top-0">
-            <div>
-                <a href="/#top" className="text-4xl font-bold hover:cursor-pointer">Logan Witte</a>
-                <div className="max-w-xs py-4 text-lg font-semibold">Computer Science Student @ University of Central Florida</div>
-                <div className="max-w-xs opacity-65">I create responsive, appealing, and accessible websites and software</div>
-                <div className="flex flex-col pt-8 lg:block">
-                    {['about', 'experience', 'projects'].map(section => (
-                        <a
-                            key={section}
-                            href={`/#${section}`}
-                            className={`${isSelected === section ? "font-bold opacity-100" : "opacity-50"} text-sm flex flex-row mb-3 hover:underline`}
-                        >
-                            <div
-                                className={`h-0 border border-white mr-3 mt-2 ${isSelected === section ? "transition-all duration-300 transform w-12" : "transition-all duration-300 transform w-6"}`}
-                            />
-                            {section.toUpperCase()}
-                        </a>
-                    ))}
-                </div>
-            </div>
-            <SocialLinks />
-        </div>
-    );
-}
+export default function Home() {
 
-// Social links component
-function SocialLinks() {
-    return (
-        <div className="mt-4 text-2xl">
-            <div className="flex flex-row">
-                <a href="https://github.com/LoganWitte" target="_blank" rel="noreferrer">
-                    <i className="p-1 pr-4 opacity-50 fa-brands fa-github hover:opacity-100" />
-                </a>
-                <a href="https://www.linkedin.com/in/logan-witte-696637308/" target="_blank" rel="noreferrer">
-                    <i className="p-1 pr-4 opacity-50 fa-brands fa-linkedin hover:opacity-100" />
-                </a>
-                <a href="/resume.pdf" target="_blank" rel="noreferrer" className="opacity-50 hover:opacity-100">
-                    <div className="flex">
-                        <i className="p-1 fa-solid fa-file-pdf" />
-                        <div className="p-1 text-base lg:pl-0">Resume</div>
-                    </div>
-                </a>
-            </div>
-        </div>
-    );
-}
-
-// Main Home component
-const Home = () => {
+    const outerRef = useRef(null);
     const [isSelected, setIsSelected] = useState("about");
-    const observer = useRef();
+    const refs = useRef({});
 
-    // Sets isSelected as the user scrolls
+    // Detects selected section based on scroll position
     useEffect(() => {
-        const sections = ["about", "experience", "projects"];
-        function callback(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    setIsSelected(entry.target.id);
+        const handleScroll = () => {
+            const sectionIds = ["about", "projects"];
+            const viewportMiddle = window.innerHeight / 2;
+            
+            let closestSection = null;
+            let closestDistance = Infinity;
+            
+            sectionIds.forEach((id) => {
+                const el = refs.current[id];
+                if (el) {
+                    const rect = el.getBoundingClientRect();
+                    const distance = Math.min(Math.abs(rect.top + 1 - viewportMiddle), Math.abs(rect.bottom - 1 - viewportMiddle));
+                    if (distance < closestDistance) {
+                        closestDistance = distance;
+                        closestSection = id;
+                    }
                 }
             });
-        }
-        observer.current = new IntersectionObserver(callback, { threshold: 0.8 });
-        sections.forEach(section => {
-            const element = document.getElementById(section);
-            if (element) observer.current.observe(element);
-        });
-        return () => {
-            if (observer.current) {
-                sections.forEach(section => {
-                    const element = document.getElementById(section);
-                    if (element) observer.current.unobserve(element);
-                });
+            
+            if (closestSection) {
+                setIsSelected(closestSection);
             }
         };
+        
+        // Initial check
+        handleScroll();
+        
+        // Listen to scroll events
+        const container = outerRef.current;
+        if (container) {
+            container.addEventListener("scroll", handleScroll);
+            return () => container.removeEventListener("scroll", handleScroll);
+        }
     }, []);
 
+    // Color selection
+    const backgroundColor = "#0F172A";
+    const textColor = "#FFFFFF";
+
     return (
-        <div className="w-screen h-screen overflow-y-auto bg-slate-900 text-slate-200 lg:flex lg:flex-row lg:justify-center">
+        <div
+            style={{ color: textColor, backgroundColor: backgroundColor }}
+            className={`w-screen h-screen overflow-y-auto lg:flex lg:flex-row lg:justify-center`}
+            ref={outerRef}
+        >
+
             <div id="top"></div>
             <Sidebar isSelected={isSelected} />
-            <div className="flex flex-row lg:min-w-2xl lg:max-w-4xl lg:flex-1 lg:h-fit lg:pt-16">
-                <div className="w-full px-12">
-                    <div id="about" style={{ height: "35em" }}>
-                        ABOUT SECTION <br />
-                        <div className="text-red-500">
-                            Note: this website is unfinished as of now <br />
-                            <div className="hidden lg:block">Please reference resume (located bottom left)</div>
-                            <div className="block lg:hidden">Please reference resume (located above)</div>
-                        </div>
-                    </div>
-                    <div id="experience" style={{ height: "35em" }}>EXPERIENCE SECTION</div>
-                    <div id="projects" style={{ height: "35em" }}>PROJECTS SECTION</div>
-                </div>
-            </div>
+
+            <main className="w-full px-12 overflow-visible lg:min-w-2xl lg:max-w-4xl lg:flex-1 lg:pt-16">
+
+                <section
+                    id="about"
+                    ref={el => refs.current["about"] = el}
+                    className="min-h-[60vh]"
+                >
+                    <h2 className="mb-4 text-3xl font-bold">About</h2>
+                    <p className="text-red-500">
+                        Note: this website is unfinished as of now.
+                        <br />
+                        Please reference resume (located <span className="hidden lg:inline">bottom left</span><span className="lg:hidden">above</span>).
+                    </p>
+                </section>
+
+                <section
+                    id="projects"
+                    ref={el => refs.current["projects"] = el}
+                    className="min-h-[60vh]"
+                >
+                    <h2 className="mb-4 text-3xl font-bold">Projects</h2>
+                </section>
+
+            </main>
+
         </div>
     );
 };
-
-export default Home;

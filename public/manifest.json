@@ -1,0 +1,17 @@
+{
+  "short_name": "LoganWitte",
+  "name": "Logan Witte Portfolio",
+  "description": "Portfolio website for Logan Witte, Computer Science Student at UCF.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#042A2B",
+  "theme_color": "#042A2B",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ]
+}
