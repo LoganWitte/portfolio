@@ -81,7 +81,7 @@ export default function Home() {
                 >
                     <h2 className="mb-4 text-3xl font-bold">Projects</h2>
                     <div className="flex flex-col items-start">
-                        <Project name="Portfolio Website" description="This website :D" link="https://loganwitte.vercel.app" imageLink="" technologies={["React","Tailwind CSS"]} technologyLinks={["https://reactjs.org/","https://tailwindcss.com/"]} />
+                        <Project name="Portfolio Website" description="This website :D" link="https://loganwitte.vercel.app" technologies={["React","Tailwind CSS"]} technologyLinks={["https://reactjs.org/","https://tailwindcss.com/"]} />
                     </div>
                 
                 </section>

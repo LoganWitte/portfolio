@@ -1,5 +1,5 @@
 export default function Project(props) {
-    const {name, description, link, imageLink, technologies, technologyLinks} = props;
+    const {name, description, link, technologies, technologyLinks} = props;
     return(
         <div className="w-full max-w-full p-2 mb-4 rounded-lg bg-slate-800">
             <a href={link} className="flex items-center p-2 text-xl font-bold rounded-full hover:underline w-fit">{name}<i className="ml-1 text-sm fa-solid fa-arrow-up-right-from-square"></i></a>
