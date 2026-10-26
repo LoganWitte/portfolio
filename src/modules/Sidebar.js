@@ -3,8 +3,8 @@ export function Sidebar({ isSelected }) {
         <div className="flex flex-col px-12 mt-12 mb-24 lg:max-w-sm lg:flex lg:justify-between lg:flex-1 lg:py-16 lg:my-0 lg:h-fit lg:min-h-full lg:sticky lg:top-0">
             <div>
                 <a href="/#top" className="text-4xl font-bold hover:cursor-pointer">Logan Witte</a>
-                <div className="max-w-xs py-4 text-lg font-semibold">Computer Science Student @ University of Central Florida</div>
-                <div className="max-w-xs pb-4 opacity-65">I create responsive, appealing, and accessible websites and software</div>
+                <div className="max-w-xs py-4 text-lg font-semibold">Computer Science Graduate | University of Central Florida</div>
+                <div className="max-w-xs pb-4 opacity-65">I create responsive, appealing, and accessible websites and software.</div>
                 <div className="flex flex-col pt-8 lg:block">
                     {["about", "projects"].map(section => (
                         <a
