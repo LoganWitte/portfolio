@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Sidebar } from "../modules/Sidebar";
+import Project from "../modules/Project";
 
 export default function Home() {
 
@@ -79,6 +80,10 @@ export default function Home() {
                     className="min-h-[60vh]"
                 >
                     <h2 className="mb-4 text-3xl font-bold">Projects</h2>
+                    <div className="flex flex-col items-start">
+                        <Project name="Portfolio Website" description="This website :D" link="https://loganwitte.vercel.app" imageLink="" technologies={["React","Tailwind CSS"]} technologyLinks={["https://reactjs.org/","https://tailwindcss.com/"]} />
+                    </div>
+                
                 </section>
 
             </main>
